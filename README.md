@@ -1,4 +1,5 @@
 # 8-weeks-SQL-challenge
+This repository includes solutions to the 8 case studies in the #8WeekSQLChallenge, created by @DataWithDanny. 
 
 # Table of contents
 * Case Study #1: Danny's Diner *
