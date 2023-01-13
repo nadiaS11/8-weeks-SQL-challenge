@@ -3,6 +3,7 @@
 ## Solution
 ***
 ### 1. What is the total amount each customer spent at the restaurant?
+
 ````sql
 select customer_id, sum(price) as total_sales
 from  dannys_diner.sales as s
@@ -22,6 +23,7 @@ order by customer_id;
 
 
 ### 2. How many days has each customer visited the restaurant?
+
 ````sql
 select customer_id, count(DISTINCT order_date)
 from dannys_diner.sales
@@ -36,6 +38,7 @@ group by customer_id;
 
 
 ### 3. What was the first item from the menu purchased by each customer?
+
 ````sql
 WITH cte_customers AS
 (
@@ -62,6 +65,7 @@ GROUP BY customer_id, product_name;
 | C           | ramen        |
 
 ### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+
 ````sql
 -- most purchased item on the menu
 select Distinct m.product_name, count(s.order_date) as most_purchased
@@ -98,6 +102,7 @@ group by ss.customer_id,  mm.product_name;
 
 
 ### 5. Which item was the most popular for each customer?
+
 ````sql
 with cte_popular_item as
 (
@@ -124,6 +129,7 @@ WHERE rank = 1;
 | B           | ramen        |  2          |
 | C           | ramen        |  3          |
 ### 6. Which item was purchased first by the customer after they became a member?
+
 ````sql
 with cte_first_order_after_join as
 (
@@ -149,6 +155,7 @@ where rank=1;
 | A           | curry      |  2021-01-07  |
 
 ### 7. Which item was purchased just before the customer became a member?
+
 ````sql
 with cte_last_order_before_join as
 (
@@ -174,6 +181,7 @@ where rank=1;
 | A           | sushi      | 2021-01-01   |
 | A           | curry      | 2021-01-01   |
 ### 8. What is the total items and amount spent for each member before they became a member?
+
 ````sql
 select s.customer_id, count(distinct s.product_id) as total_item, sum(m.price) as total_amount
 from dannys_diner.sales as s
@@ -190,6 +198,7 @@ group by s.customer_id;
 | A           | 2          |  25          |
 | B           | 2          |  40          |
 ### 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+
 ````sql
 with cte_points as
 (
@@ -216,6 +225,7 @@ Select *,
 
 
 ### 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
 ````sql
 WITH dates_cte AS (
    SELECT m.*, 
@@ -236,6 +246,7 @@ JOIN dannys_diner.menu m ON s.product_id = m.product_id
 WHERE s.order_date < d.last_date
 GROUP BY d.customer_id;
 ````
+
 #### Answer:
 | customer_id | points         | 
 | ----------- | ----------     |
@@ -247,8 +258,10 @@ GROUP BY d.customer_id;
 ## Bonus Questions
 
 ### Join All The Things(Recreating the following table)
-|customer_id | order_date| product_name	| price	member
-| --------- | ---------| ----------- | ----------- |
+
+|customer_id | order_date| product_name	| price	| member
+| --------- | ---------| -----------  | -------- | ---------
+|A	| 2021-01-01	 | curry	 | 15	 | N
 |A	| 2021-01-01	 | sushi	 | 10	 | N
 |A	| 2021-01-07	 | curry	 | 15	 | Y
 |A	| 2021-01-10	 | ramen	 | 12	 | Y
@@ -264,6 +277,7 @@ GROUP BY d.customer_id;
 |C	| 2021-01-01	 | ramen	 | 12	 | N
 |C	| 2021-01-07	 | ramen	 | 12	 | N
 
+#### Answer:
 ````sql
 select s.customer_id, s.order_date, m.product_name,m.price, 
 		case when s.order_date>=mm.join_date then 'Y'
@@ -276,12 +290,49 @@ join dannys_diner.members as mm
 on s.customer_id=mm.customer_id;
 
 ````
-### Rank All The Things
+### Rank All The Things - Danny also requires further information about the ranking of customer products, but he purposely does not need the ranking for non-member purchases so he expects null ranking values for the records when customers are not yet part of the loyalty program
 
 
+#### Answer:
+````sql
+with membership_data as(
+  select s.customer_id, s.order_date, m.product_name,m.price, 
+		case when s.order_date>=mm.join_date then 'Y'
+        else 'N'
+        end as membership
+from dannys_diner.sales as s
+join dannys_diner.menu as m
+on s.product_id=m.product_id
+join dannys_diner.members as mm
+on s.customer_id=mm.customer_id
+ )
+ 
+ select *,
+ case when membership='N' then NULL
+		else Rank() over(PARTITION BY customer_id, membership ORDER BY order_date)
+   		 END AS Ranking
+from membership_data;
 
+````
+#### Answer:
 
-
+| customer_id | order_date| product_name | price  | membership | ranking
+| --------- | ---------| ----------- | --------- | ---------  | --------- 
+|A	| 2021-01-01	 | sushi	 | 10	 | N          | Null
+|A	| 2021-01-01	 | curry	 | 10	 | N          | Null
+|A	| 2021-01-07	 | curry	 | 15	 | Y          | 1       
+|A	| 2021-01-10	 | ramen	 | 12	 | Y          | 2         
+|A	| 2021-01-11	 | ramen	 | 12	 | Y          | 3         
+|A	| 2021-01-11	 | ramen	 | 12	 | Y          | 3
+|B	| 2021-01-01	 | curry	 | 15	 | N          | Null        
+|B	| 2021-01-02	 | curry	 | 15	 | N          | Null        
+|B	| 2021-01-04	 | sushi	 | 10	 | N          | Null
+|B	| 2021-01-11	 | sushi	 | 10	 | Y          | 1
+|B	| 2021-01-16	 | ramen	 | 12	 | Y          | 2
+|B	| 2021-02-01	 | ramen	 | 12	 | Y          | 3
+|C	| 2021-01-01	 | ramen	 | 12	 | N          | Null
+|C	| 2021-01-01	 | ramen	 | 12	 | N          | Null
+|C	| 2021-01-07	 | ramen	 | 12	 | N          | Null
 
 
 
