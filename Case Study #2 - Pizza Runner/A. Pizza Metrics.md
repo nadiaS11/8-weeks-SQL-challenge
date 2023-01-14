@@ -21,20 +21,46 @@ FROM pizza_runner.customer_orders;
 
 ### 3. How many successful orders were delivered by each runner?
 ````sql
-
+select runner_id, count(order_id) as successful_orders
+from pizza_runner.runner_orders
+where  distance != 'null'
+group by runner_id;
 ````
 #### Answer:
+![Screenshot 2023-01-15 015654](https://user-images.githubusercontent.com/110742273/212494822-b62f533c-c049-40c7-8ee6-c7baa95981a8.jpg)
+
 ### 4. How many of each type of pizza was delivered?
 ````sql
-
+select runner_id, count(order_id) as successful_orders
+from pizza_runner.runner_orders
+where  distance != 'null'
+group by runner_id;
+--How many of each type of pizza was delivered?
+select p.pizza_name, count(r.order_id)
+from pizza_runner.pizza_names as p
+join pizza_runner.customer_orders as c
+on p.pizza_id=c.pizza_id
+join pizza_runner.runner_orders as r
+on c.order_id=r.order_id
+where r.distance != 'null'
+group by p.pizza_name;
 ````
 #### Answer:
+![Screenshot 2023-01-15 015654](https://user-images.githubusercontent.com/110742273/212495399-affbd78f-9356-4043-9790-6fe1e45383cc.jpg)
+
 ### 5. How many Vegetarian and Meatlovers were ordered by each customer?
 ````sql
-
+select c.customer_id, p.pizza_name, count(c.order_id)
+from pizza_runner.pizza_names as p
+join pizza_runner.customer_orders as c
+on p.pizza_id=c.pizza_id
+group by c.customer_id, p.pizza_name
+ORDER BY c.customer_id;
 ````
 
 #### Answer:
+![Screenshot 2023-01-15 015654](https://user-images.githubusercontent.com/110742273/212495645-034e82d0-03f9-4143-913b-c7f07e0ea9a3.jpg)
+
 ### 6. What was the maximum number of pizzas delivered in a single order?
 ````sql
 
