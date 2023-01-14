@@ -2,7 +2,8 @@
 This repository includes solutions to the 8 case studies in the #8WeekSQLChallenge, created by @DataWithDanny. 
 
 # Table of contents
-* Case Study #1: Danny's Diner 
+
+* [Case Study #1: Danny's Diner](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%231:%20Danny's%20Diner/Read_me.md)
 * Case Study #2: Pizza Runner
 * Case Study #3: Foodie-Fi 
 * Case Study #4: Data Bank
