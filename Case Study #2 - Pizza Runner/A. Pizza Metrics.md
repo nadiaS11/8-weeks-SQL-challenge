@@ -63,9 +63,19 @@ ORDER BY c.customer_id;
 
 ### 6. What was the maximum number of pizzas delivered in a single order?
 ````sql
-
+select r.order_id, count(c.pizza_id) as pizzas_per_order,
+		DENSE_RANK() OVER(ORDER BY COUNT(c.pizza_id) DESC) as rank
+from pizza_runner.runner_orders as r
+join pizza_runner.customer_orders as c
+on r.order_id=c.order_id
+where r.distance  IS NOT NULL
+group by r.order_id
+order by count(c.pizza_id) desc;
 ````
 #### Answer:
+![Screenshot 2023-01-15 015654](https://user-images.githubusercontent.com/110742273/213010344-934f21a0-d9d6-4cea-8a12-d27f8ef0089a.jpg)
+- Order ID 4 has the maximum number of pizza delivered in a single order with 3 pizzas
+
 ### 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 ````sql
 
