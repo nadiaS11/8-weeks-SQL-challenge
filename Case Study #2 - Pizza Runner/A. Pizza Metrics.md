@@ -100,10 +100,20 @@ order by customer_id;
 
 ### 8. How many pizzas were delivered that had both exclusions and extras?
 ````sql
-
+select c.customer_id, 
+	sum(
+	case when exclusions is not null AND extras is not null then 1
+	else 0
+    end)  as both_exclusions	
+from customer_orders_new as c
+join runner_orders_new as r on c.order_id=r.order_id
+where distance is not null
+group by customer_id
+order by customer_id;
 ````
 
 #### Answer:
+![Screenshot 2023-01-15 015654](https://user-images.githubusercontent.com/110742273/213941148-b2d39c3b-3b55-4e9c-8eb3-122b0b2bc3d0.jpg)
 
 
 ### 9. What was the total volume of pizzas ordered for each hour of the day?
