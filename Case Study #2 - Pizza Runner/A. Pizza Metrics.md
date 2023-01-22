@@ -77,16 +77,35 @@ order by count(c.pizza_id) desc;
 - Order ID 4 has the maximum number of pizza delivered in a single order with 3 pizzas
 
 ### 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
+- This is where i switched to MySQL and made necessary changes such copying the table and cleaning the data.
 ````sql
+select c.customer_id, 
+	sum(
+	case when exclusions is not null or extras is not null then 1
+	else 0
+    end)  as at_least_one_change,
+	sum(
+	case when exclusions is null AND  extras is null then 1
+	else 0
+    end) as no_change
 
+from customer_orders_new as c
+join runner_orders_new as r on c.order_id=r.order_id
+where distance is not null
+group by customer_id
+order by customer_id;
 ````
 #### Answer:
+![Screenshot 2023-01-15 015654](https://user-images.githubusercontent.com/110742273/213940702-d06f2a0c-7adf-4142-8143-ec3f819a40ba.jpg)
+
 ### 8. How many pizzas were delivered that had both exclusions and extras?
 ````sql
 
 ````
 
 #### Answer:
+
+
 ### 9. What was the total volume of pizzas ordered for each hour of the day?
 ````sql
 
