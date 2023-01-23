@@ -118,12 +118,21 @@ order by customer_id;
 
 ### 9. What was the total volume of pizzas ordered for each hour of the day?
 ````sql
-
+ select extract(hour from order_time) as Hour_data, count(order_id) as pizza_count
+from pizza_runner.customer_orders_new
+group by Hour_data
+order by Hour_data
 ````
 #### Answer:
+![Screenshot 2023-01-23 152030](https://user-images.githubusercontent.com/110742273/214004266-7cd13f33-ca31-4858-ad03-ff41eb17ce28.jpg)
+
 ### 10.What was the volume of orders for each day of the week?
 ````sql
-
+ select dayname( order_time) as day_of_the_week, count(order_id) as pizza_count
+from pizza_runner.customer_orders_new
+group by day_of_the_week
+order by day_of_the_week
 ````
 
 #### Answer:
+![Screenshot 2023-01-23 152030](https://user-images.githubusercontent.com/110742273/214004916-9459df04-7384-4396-a18a-7d8661f800f7.jpg)
