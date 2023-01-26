@@ -7,7 +7,7 @@
 - [Case Study Questions](#case-study-questions)
 - Solutions
     - [Pizza Metrics](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/A.%20Pizza%20Metrics.md)
-    - Runner and Customer Experience
+    - [Runner and Customer Experience](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/B.%20Runner%20and%20Customer%20Experience.md)
     - Ingredient Optimisation
     - Pricing and Ratings
     - Bonus DML Challenges (DML = Data Manipulation Language)
