@@ -6,7 +6,7 @@
 - [Entity Relationship Diagram](#entity-relationship-diagram)
 - [Case Study Questions](#case-study-questions)
 - Solutions
-    - Pizza Metrics
+    - [Pizza Metrics](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/A.%20Pizza%20Metrics.md)
     - Runner and Customer Experience
     - Ingredient Optimisation
     - Pricing and Ratings
@@ -28,7 +28,7 @@ This case study has LOTS of questions - they are broken up by following area:
 
 ### A. Pizza Metrics
 
-View my solution [here]
+View my solution [here](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/A.%20Pizza%20Metrics.md)
 
 1. How many pizzas were ordered?
 2. How many unique customer orders were made?
