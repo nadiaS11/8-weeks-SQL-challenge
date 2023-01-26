@@ -112,4 +112,4 @@ order by runner_id;
 #### Answer:
 ![Screenshot 2023-01-23 202024](https://user-images.githubusercontent.com/110742273/214943562-e2108be1-982e-4def-b4d0-341bfda2be25.jpg)
 
-- I didn't factor in order cancellation as it is always out of runners control.
+- I didn't account for order cancellation as it is always out of runner's control.
