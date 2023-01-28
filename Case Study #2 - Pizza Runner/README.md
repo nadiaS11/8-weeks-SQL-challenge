@@ -5,6 +5,7 @@
 - [Business Task](#business-task)
 - [Entity Relationship Diagram](#entity-relationship-diagram)
 - [Case Study Questions](#case-study-questions)
+- Data Cleaning
 - Solutions
     - [Pizza Metrics](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/A.%20Pizza%20Metrics.md)
     - [Runner and Customer Experience](https://github.com/nadiaS11/8-weeks-SQL-challenge/blob/main/Case%20Study%20%232%20-%20Pizza%20Runner/B.%20Runner%20and%20Customer%20Experience.md)
