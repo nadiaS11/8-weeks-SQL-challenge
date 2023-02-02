@@ -11,7 +11,14 @@
 
 ### 2. What was the most commonly added extra?
 ````sql
+```sql
 
+FROM toppings_cte t
+INNER JOIN pizza_runner.pizza_toppings pt
+  ON t.topping_id = pt.topping_id
+GROUP BY t.topping_id, pt.topping_name
+ORDER BY topping_count DESC;
+```
 ````
 
 #### Answer:
